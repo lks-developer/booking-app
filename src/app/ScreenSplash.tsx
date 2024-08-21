@@ -9,7 +9,8 @@ export default function ScreenSplash() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setHasWaited(true);
-      router.push('/ScreenLogin');
+      router.push('/(tabs)');
+      
     }, 5000); // 5 seconds
 
     return () => clearTimeout(timeout);
@@ -19,7 +20,7 @@ export default function ScreenSplash() {
     // If the user navigates back to this screen after waiting 5 seconds, immediately redirect
     if (hasWaited) {
       setHasWaited(false);
-      router.replace('/ScreenLogin');
+      router.replace('/(tabs)');
     }
   }, [hasWaited, router]);
 

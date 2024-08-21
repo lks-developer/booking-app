@@ -34,7 +34,7 @@ export default function ScreenLogin() {
 
   const handleConfirmOtp = () => {
     // Simulate OTP verification and navigation to dashboard
-    router.push('/ScreenDashboard');
+    router.push('/(tabs)');
   };
 
   return (
