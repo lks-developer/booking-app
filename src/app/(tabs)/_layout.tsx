@@ -1,18 +1,48 @@
 import { Stack, Tabs } from "expo-router";
-import { TouchableOpacity, View, Text,StyleSheet } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import ComponentHeader from "../../components/ComponentHeader";
 
 export default function RootLayout() {
   return (
-    <View style ={styles.container}>
-      <View style = {styles.header}>
-        <TouchableOpacity>
-          <Text>Hall Booking</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.container}>
+      <ComponentHeader/>
       <Tabs>
         <Tabs.Screen
           name="index"
-          options={{headerShown: false}}
+          options={{ headerShown: false, tabBarLabel: "",
+            tabBarIcon:({focused, color,size})=>(
+              <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={size}
+              color={color}
+              />
+            ) }}
+        />
+
+<Tabs.Screen
+          name="ScreenBookings"
+          options={{ headerShown: false, tabBarLabel: "" ,
+            tabBarIcon:({focused, color,size})=>(
+              <Ionicons
+              name={focused ? 'book' : 'book-outline'}
+              size={size}
+              color={color}
+              />
+            )
+          }}
+        />
+        <Tabs.Screen
+          name="ScreenAccount"
+          options={{ headerShown: false, tabBarLabel: "" ,
+            tabBarIcon:({focused, color,size})=>(
+              <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={size}
+              color={color}
+              />
+            )
+          }}
         />
       </Tabs>
     </View>
@@ -22,15 +52,5 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    height: 60,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: 'bold',
   },
 });

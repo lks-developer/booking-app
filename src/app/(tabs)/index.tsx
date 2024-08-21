@@ -1,5 +1,5 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs,useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -7,11 +7,15 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Alert
 } from "react-native";
 
 import { Ionicons } from "@expo/vector-icons";
 
 export default function ScreenDashboard() {
+
+  const router = useRouter();
+
   const recommendedHotels = [
     {
       id: "1",
@@ -66,10 +70,18 @@ export default function ScreenDashboard() {
     { day: "25", dayName: "SUN" },
   ];
 
+  
+
   const renderHallCard = ({ item }) => {
+    const handlePress = () => {
+      // You can navigate to another screen, show an alert, or perform any action here
+      // Alert.alert('Hotel Selected', `You selected ${item.name}`);
+      router.push('../ScreenHall')
+    };
+
     if (!item) return null; // Prevent rendering if item is null or undefined
     return (
-      <TouchableOpacity style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={handlePress}>
         <Image source={{ uri: item.image }} style={styles.hotelImage} />
         <View style={styles.hotelInfo}>
           <Text style={styles.hotelName}>{item.name}</Text>
