@@ -94,11 +94,11 @@ export default function ScreenDashboard() {
       {/* Search header */}
       <View style={styles.header}>
         <View>
-          <View style={styles.locationRow}>
+          <TouchableOpacity style={styles.locationRow}>
             <Ionicons name="location-outline" size={24} color="black" />
             {/* <Text style={styles.label}>Location</Text> */}
             <Text style={styles.locationText}>Bhubaneswar</Text>
-          </View>
+          </TouchableOpacity>
           <View
             style={{
               flexDirection: "row",
