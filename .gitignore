@@ -36,3 +36,4 @@ yarn-error.*
 
 # IntelliJ
 .idea/*
+expo-env.d.ts
