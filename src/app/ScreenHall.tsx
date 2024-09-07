@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker'; // Updated DateTimePicker
 import { Picker } from '@react-native-picker/picker'; // For slot selection
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+
 
 // Import react-datepicker for web usage
-import 'react-datepicker/dist/react-datepicker.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 import ReactDatePicker from 'react-datepicker'; // Only for web platform
 
 export default function ScreenHall() {
@@ -53,7 +55,67 @@ export default function ScreenHall() {
            To ${toDate.toDateString()} (${toSlot})`);
   };
 
+
   const slotOptions = ['morning', 'evening'];
+  // Example booking data
+  const [markedDates, setMarkedDates] = useState({});
+
+
+  useEffect(() => {
+    // Simulate fetching booking data from an API
+    const bookings = [
+      { date: '2024-09-10', status: 'booked' },
+      { date: '2024-09-15', status: 'semi-booked' },
+      { date: '2024-09-20', status: 'booked' },
+    ];
+
+    // Mark dates based on booking status with custom background colors
+    const marked = {};
+
+    bookings.forEach((booking) => {
+      if (booking.status === 'booked') {
+        marked[booking.date] = {
+          customStyles: {
+            container: {
+              backgroundColor: 'red',
+            },
+            text: {
+              color: 'white',
+              fontWeight: 'bold',
+            },
+          },
+        };
+      } else if (booking.status === 'semi-booked') {
+        marked[booking.date] = {
+          customStyles: {
+            container: {
+              backgroundColor: 'yellow',
+            },
+            text: {
+              color: 'black',
+              fontWeight: 'bold',
+            },
+          },
+        };
+      } else {
+        marked[booking.date] = {
+          customStyles: {
+            container: {
+              backgroundColor: 'gray',
+            },
+            text: {
+              color: 'white',
+              fontWeight: 'bold',
+            },
+          },
+        };
+      }
+    });
+
+    setMarkedDates(marked);
+  }, []);
+
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -66,6 +128,38 @@ export default function ScreenHall() {
         <Text style={styles.description}>{hall.description}</Text>
         <Text style={styles.rating}>Rating: ⭐ {hall.rating}</Text>
         <Text style={styles.area}>Area: {hall.area} sq. feet</Text>
+      </View>
+
+      <View>
+
+         {/* Calendar View */}
+      <Text style={styles.sectionTitle}>Booked Dates</Text>
+      {/* <Calendar
+        // Initially select today's date
+        current={new Date().toISOString().split('T')[0]}
+        // minDate={new Date().toISOString().split('T')[0]}
+        // maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]} // Next 30 days
+        markedDates={markedDates}
+        markingType={'dot'}
+      /> */}
+
+<Calendar
+          // Initially select today's date
+          current={new Date().toISOString().split('T')[0]}
+          markedDates={markedDates}
+          minDate={new Date().toISOString().split('T')[0]}
+          maxDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]} // Next 30 days  
+          markingType={'custom'}
+          theme={{
+            calendarBackground: '#f5f5f5',
+            textSectionTitleColor: '#333',
+            monthTextColor: '#007bff',
+            arrowColor: '#007bff',
+            textDayFontFamily: 'monospace',
+            textMonthFontFamily: 'monospace',
+            textDayHeaderFontFamily: 'monospace',
+          }}
+        />
       </View>
 
       {/* Occasion Picker */}
@@ -113,13 +207,13 @@ export default function ScreenHall() {
           )}
 
           {/* Web DatePicker */}
-          {Platform.OS === 'web' && (
+          {/* {Platform.OS === 'web' && (
             <ReactDatePicker
               selected={fromDate}
               onChange={(date) => setFromDate(date)}
               dateFormat="MM-dd-yyyy"
             />
-          )}
+          )} */}
         </View>
 
         {/* To Date */}
@@ -151,13 +245,13 @@ export default function ScreenHall() {
           )}
 
           {/* Web DatePicker */}
-          {Platform.OS === 'web' && (
+          {/* {Platform.OS === 'web' && (
             <ReactDatePicker
               selected={toDate}
               onChange={(date) => setToDate(date)}
               dateFormat="MM-dd-yyyy"
             />
-          )}
+          )} */}
         </View>
       </View>
 
